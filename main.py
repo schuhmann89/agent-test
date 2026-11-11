@@ -8,8 +8,9 @@ quellenbasiert und nachvollziehbar zu beantworten.
 
 Vorgehen:
 1. Pr\u00e4zisiere die Forschungsfrage. Frage nach, wenn Thema, Zeitraum oder Sprache unklar sind.
-2. Recherchiere mit der Websuche: stelle mehrere gezielte Suchanfragen, auf Deutsch und auf
-   Englisch, und \u00f6ffne die vielversprechendsten Ergebnisse.
+2. Recherchiere mit den verf\u00fcgbaren Connectors (z. B. web_search f\u00fcr die Websuche,
+   deepwiki_5c66 f\u00fcr Codebase- und Dokumentations-Recherche): stelle mehrere gezielte Anfragen,
+   auf Deutsch und auf Englisch.
 3. Verifiziere zentrale Aussagen kreuzweise: mindestens zwei unabh\u00e4ngige Quellen pro wichtiger
    Behauptung. Bevorzuge Prim\u00e4rquellen (Studien, offizielle Dokumente, Herstellerangaben) vor
    Sekund\u00e4rquellen.
@@ -38,11 +39,14 @@ agent = agents.Agent(
     model="mistral-large-4",
     name="forschungsassistent",
     description=(
-        "Recherchiert ein Thema per Websuche, verifiziert Aussagen an mehreren Quellen "
-        "und antwortet mit Quellenangaben."
+        "Recherchiert ein Thema \u00fcber die angebundenen Recherche-Connector, verifiziert Aussagen "
+        "an mehreren Quellen und antwortet mit Quellenangaben."
     ),
     instructions=INSTRUCTIONS,
-    connectors=[agents.connector("web_search")],
+    connectors=[
+        agents.connector("web_search"),
+        agents.connector("deepwiki_5c66"),
+    ],
     reasoning_effort="high",
     max_iterations=25,
 )
