@@ -1,0 +1,11 @@
+[project]
+name = "forschungsassistent"
+version = "0.1.0"
+description = "Forschungsassistent auf Basis des Mistral Agents SDK: Websuche, Quellenpruefung, Antworten mit Quellenangaben."
+requires-python = ">=3.12,<3.15"
+dependencies = [
+    "mistralai-agents==1.1.2",
+]
+
+[tool.mistralai.agents]
+entrypoint = "main:agent"
