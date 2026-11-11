@@ -1,12 +1,15 @@
 # Forschungsassistent
 
 Ein [Managed Agent](https://docs.mistral.ai/studio/agents/overview) auf Basis des Mistral Agents
-SDK (`mistralai-agents`). Er recherchiert ein Thema per Websuche, verifiziert zentrale Aussagen an
-mehreren unabh\u00e4ngigen Quellen und antwortet mit Titel und URL jeder Quelle.
+SDK (`mistralai-agents`). Er recherchiert ein Thema \u00fcber angebundene Recherche-Connector,
+verifiziert zentrale Aussagen an mehreren unabh\u00e4ngigen Quellen und antwortet mit Titel und URL
+jeder Quelle.
 
 - Modell: `mistral-large-4`, `reasoning_effort="high"`, `max_iterations=25`
-- Websuche \u00fcber Mistrals eingebauten `web_search`-Connector (`agents.connector("web_search")`),
-  ohne Sign-in
+- Connector: `deepwiki_5c66` (DeepWiki-Recherche \u00fcber GitHub-Repos: `ask_wiki_question`,
+  `read_wiki_contents`, `read_wiki_structure`) sowie `web_search` (Websuche; muss im Workspace
+  bzw. der Organisation als Connector verf\u00fcgbar sein, sonst meldet die Session eine Notice und
+  f\u00e4hrt ohne ihn fort)
 - Agent-Name: `forschungsassistent` (eindeutig pro Workspace)
 
 ## Voraussetzungen
@@ -77,11 +80,14 @@ asyncio.run(main())
 
 ## Weitere Quellen anbinden
 
-In `main.py` weitere Connector erg\u00e4nzen, z. B. wissenschaftliche Literatur:
+In `main.py` weitere Connector erg\u00e4nzen, z. B. allgemeine Websuche \u00fcber einen eigenen MCP
+(z. B. Tavily, in Mistral Studio unter Connectors als Custom MCP hinzugef\u00fcgt) oder
+wissenschaftliche Literatur:
 
 ```python
 connectors=[
     agents.connector("web_search"),
+    agents.connector("deepwiki_5c66"),
     agents.connector("pubmed"),
 ]
 ```
